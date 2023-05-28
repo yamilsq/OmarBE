@@ -15,7 +15,7 @@
         public bool TopRightWheel { get; set; }
         public bool BottomLeftWheel { get; set; }
         public bool BottomRightWheel { get; set; }
-
+        public int FuelQuantity { get; set; }
         public DateTime InspectionDate { get; set; }
 
         public int EventType { get; set; }

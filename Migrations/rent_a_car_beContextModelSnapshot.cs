@@ -129,6 +129,9 @@ namespace rent_a_car_be.Migrations
                     b.Property<int>("EventType")
                         .HasColumnType("int");
 
+                    b.Property<int>("FuelQuantity")
+                        .HasColumnType("int");
+
                     b.Property<bool>("HasGato")
                         .HasColumnType("bit");
 

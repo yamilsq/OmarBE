@@ -61,6 +61,28 @@ namespace rent_a_car_be.Controllers
             return carsDto;
         }
 
+        [HttpGet("/api/Cars/available")]
+        public async Task<ActionResult<IEnumerable<Car>>> GetAvailableCars()
+        {
+            if (_context.Car == null)
+            {
+                return NotFound();
+            }
+            var cars = await _context.Car.Where(x => x.Status == 1).ToListAsync();
+            return cars;
+        }
+
+        [HttpGet("/api/Cars/not-available")]
+        public async Task<ActionResult<IEnumerable<Car>>> GetNotAvailableCars()
+        {
+            if (_context.Car == null)
+            {
+                return NotFound();
+            }
+            var cars = await _context.Car.Where(x => x.Status == 0).ToListAsync();
+            return cars;
+        }
+
         // GET: api/Cars/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Car>> GetCar(int id)

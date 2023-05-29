@@ -124,14 +124,27 @@ namespace rent_a_car_be.Controllers
         [HttpPost]
         public async Task<ActionResult<CarInspection>> PostCarInspection(CarInspection carInspection)
         {
-          if (_context.CarInspection == null)
-          {
-              return Problem("Entity set 'rent_a_car_beContext.CarInspection'  is null.");
-          }
-            _context.CarInspection.Add(carInspection);
-            await _context.SaveChangesAsync();
+            try
+            {
+                if (_context.CarInspection == null)
+                    return Problem("Entity set 'rent_a_car_beContext.CarInspection'  is null.");
+                
+                _context.CarInspection.Add(carInspection);
 
-            return CreatedAtAction("GetCarInspection", new { id = carInspection.Id }, carInspection);
+                if (carInspection.EventType == 2) {
+                    var car = _context.Car.FirstOrDefault(x => x.Id == carInspection.CarId);
+                    if (car != null)
+                        car.Status = 1;
+                }
+
+                await _context.SaveChangesAsync();
+
+                return Ok(true);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         // DELETE: api/CarInspections/5
